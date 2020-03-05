@@ -1,0 +1,14 @@
+.pokemon-titulo{
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lista-pokemones{
+    text-align: center;
+}
+
+.botones-centrados{
+    align-items: center;
+}
