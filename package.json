@@ -1,0 +1,23 @@
+{
+  "name": "pokedex",
+  "version": "1.0.0",
+  "description": "pokedex para r/argentina programa",
+  "main": "index.html",
+  "dependencies": {
+    "tailwindcss": "^1.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Innolize/pokedex.git"
+  },
+  "author": "Román Mettler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Innolize/pokedex/issues"
+  },
+  "homepage": "https://github.com/Innolize/pokedex#readme"
+}
