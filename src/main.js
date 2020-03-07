@@ -27,15 +27,13 @@ async function mostrarListaPokemon(URL) {
 }
 
 
- function obtenerNumeroPokemon(elemento){
+function obtenerNumeroPokemon(elemento) {
     let numeroPokemon = elemento.substr(elemento.length - 5)
-    console.log(numeroPokemon)
-     return numeroPokemon.replace(/[^0-9]/g, '');
+    return numeroPokemon.replace(/[^0-9]/g, '');
 }
 
-function clickEnPokemon(){
+function clickEnPokemon() {
     const click = event.target
-    console.log(click.dataset.pokemon)
     return click.dataset.pokemon
 }
 
@@ -67,18 +65,38 @@ async function mostrarPokemonSeleccionado(pokemon) {
     await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
         .then(respuesta => respuesta.json())
         .then(respuestaJSON => {
-            respuestaJSON.abilities.forEach(elemento => {
-                $("#habilidad").append(`<div>${elemento.ability.name}`)
-            })
-            
-            
+
+
+            mostrarMiniDescripcion(respuestaJSON.id)
             mostrarNumeroYNombrePokemon(respuestaJSON)
             mostrarImagenPokemon(respuestaJSON)
-            mostrarStatsPokemon (respuestaJSON)
+            mostrarStatsPokemon(respuestaJSON)
             obtenerDescripcion(respuestaJSON.id)
-            obtenerHabilidad(respuestaJSON.name)
+            manejarHabilidad()
+            async function manejarHabilidad() {
+                const habilidad = await obtenerHabilidad(respuestaJSON.name)
+                mostrarHabilidad(habilidad)
+            }
         })
 }
+
+async function mostrarHabilidad(elemento) {
+    console.log(elemento)
+    $("#habilidad").html("")
+
+    $("#habilidad").append(`<div>${elemento}`)
+}
+
+async function mostrarMiniDescripcion(id) {
+    await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
+        .then(respuesta => respuesta.json())
+        .then(respuestaJSON => {
+            let miniDescripcion = respuestaJSON.genera.find((x) =>
+                x.language.name === "es");
+            $("#mini-descripcion").text(miniDescripcion.genus)
+        })
+}
+
 
 function obtenerImagenPokemon(id) {
     const URLFoto = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${agregarCeros(id, 3)}.png`
@@ -93,15 +111,15 @@ function agregarCeros(numero, longitud) {
     return string
 }
 
-function mostrarNumeroYNombrePokemon(respuestaJSON){
-$("#id-pokemon").text(`Nº ${respuestaJSON.id} ${respuestaJSON.name}`)
+function mostrarNumeroYNombrePokemon(respuestaJSON) {
+    $("#id-pokemon").text(`Nº ${respuestaJSON.id} ${respuestaJSON.name}`)
 }
 
-function mostrarImagenPokemon(respuestaJSON){
+function mostrarImagenPokemon(respuestaJSON) {
     $("#imagen-pokemon").attr("src", `${obtenerImagenPokemon(respuestaJSON.id)}`)
 }
 
-function mostrarStatsPokemon (respuestaJSON){
+function mostrarStatsPokemon(respuestaJSON) {
     $("#ataque").text(`Ataque: ${respuestaJSON.stats[4].base_stat}`)
     $("#defensa").text(`Defensa: ${respuestaJSON.stats[3].base_stat}`)
     $("#ataque-s").text(`Ataque S: ${respuestaJSON.stats[2].base_stat}`)
@@ -131,24 +149,26 @@ async function obtenerHabilidad(name) {
                 console.log(elemento.ability.url)
                 array.push(elemento.ability.url)
             })
+            let arrayTraducido = []
             array.forEach(elemento => {
-                traducirEspaniol(elemento)
+                arrayTraducido.push(traducirEspaniol(elemento))
             })
+            return arrayTraducido
         })
 }
 
 
-// async function traducirEspaniol(elemento) {
-//     await fetch(elemento)
-//         .then(respuesta => respuesta.json())
-//         .then(respuestaJSON => {
-//             console.log(respuestaJSON)
-//             debugger
-//             const temporal = respuestaJSON.find((x) =>
-//                 x.language.name === "es");
-//             console.log(temporal)
-//         })
-// }
+async function traducirEspaniol(elemento) {
+    await fetch(elemento)
+        .then(respuesta => respuesta.json())
+        .then(respuestaJSON => {
+            console.log(respuestaJSON)
+            debugger
+            const temporal = respuestaJSON.names.find((x) =>
+                x.language.name === "es");
+            return temporal.names
+        })
+}
 // function obtenerTipo
 
 // function obtenerEvoluciones
