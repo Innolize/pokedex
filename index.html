@@ -4,10 +4,11 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>Pokedex</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/main.css'>
-    <link rel="stylesheet" href="node_modules/tailwindcss/dist/tailwind.min.css" </head>
+    <link rel="stylesheet" href="node_modules/tailwindcss/dist/tailwind.min.css" >
+</head>
 
 <body>
     <h1>pokedex BETA</h1>
@@ -27,47 +28,51 @@
     <div id="data" class="flex mb-4">
         <div id="lista-pokemon" class="w-1/2">
             <ul id="pokemones"></ul>
-            <div id="botones"  style="text-align: center;">
+            <div id="botones" style="text-align: center;">
                 <button
                     class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-                    id="Anterior">
+                    id="anterior">
                     Anterior
                 </button>
                 <button
                     class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-                    id="Siguiente">
+                    id="siguiente">
                     Siguiente
                 </button>
             </div>
         </div>
         <div id="carta-pokemon" class="w-1/2">
             <div class="max-w-sm w-full lg:max-w-full lg:flex">
-                <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-                    style="background-image: url('img/bulbasaur.png')" title="bulbasaur">
+                <div>
+                    <img id="imagen-pokemon" src="img/bulbasaur.png">
                 </div>
                 <div
-                    class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-                    <div class="mb-8">
-                        <p class="text-sm text-gray-600 flex items-center">
-                            <svg class="fill-current text-gray-500 w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" />
-                            </svg>
-                            Members only
-                        </p>
-                        <div class="text-gray-900 font-bold text-xl mb-2">Can coffee make you a better developer?</div>
-                        <p class="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                        </p>
+                    class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal rounded" style="opacity: 0.9;">
+                    <div class="flex mb-8">
+                        <div id="lado-a" class="w-2/3">
+                            <div class="text-gray-900 font-bold text-xl mb-2" id="id-pokemon">Nº X Pokemon</div>
+                            <div id="tipos">tipos</div>
+                            <p class="text-gray-700 text-base" id="descripcion">descripcion
+                            </p>
+                        </div>
+                        <div id="lado-b" class="class=w-1/3">
+                            <div id="habilidad">Habilidad:</div>
+                            <div id="ataque">Ataque: </div>
+                            <div id="defensa">Defensa: </div>
+                            <div id="ataque-s">Ataque S:</div>
+                            <div id="defensa-s">Defensa S:</div>
+                            <div id="velocidad">Velocidad:</div>
+                            <div id="vitalidad">Vitalidad:</div>
+                        </div>
                     </div>
                     <div class="flex items-center">
                         <img class="w-10 h-10 rounded-full mr-4" src="img/bulbasaur.png" alt="Imagen de bulbasaur">
                         <div class="text-sm">
-                            <p class="text-gray-900 leading-none">tipo</p>
-                            <p class="text-gray-600">Aug 18</p>
+                            <p class="text-gray-900 leading-none">Familia evolutiva</p>
+                            <p class="text-gray-600"> => Yvisor => Venusaur</p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
