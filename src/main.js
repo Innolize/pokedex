@@ -9,8 +9,10 @@ async function mostrarListaPokemon(URL) {
     await fetch(URL)
         .then(respuesta => respuesta.json())
         .then(respuestaJSON => {
+            console.log(respuestaJSON)
             Object.keys(respuestaJSON.results).forEach(pokemones => {
-                $("#pokemones").append($(`<li class="lista-pokemones" data-pokemon="${respuestaJSON.results[pokemones].name}">${respuestaJSON.results[pokemones].name}</li>`))
+                numeroPokemonLista = obtenerNumeroPokemon(respuestaJSON.results[pokemones].url)
+                $("#pokemones").append($(`<li class="lista-pokemones" data-pokemon="${respuestaJSON.results[pokemones].name}">#${numeroPokemonLista} ${respuestaJSON.results[pokemones].name}</li>`))
 
 
             })
@@ -24,6 +26,12 @@ async function mostrarListaPokemon(URL) {
         })
 }
 
+
+ function obtenerNumeroPokemon(elemento){
+    let numeroPokemon = elemento.substr(elemento.length - 5)
+    console.log(numeroPokemon)
+     return numeroPokemon.replace(/[^0-9]/g, '');
+}
 
 function clickEnPokemon(){
     const click = event.target
@@ -94,7 +102,7 @@ function mostrarImagenPokemon(respuestaJSON){
 }
 
 function mostrarStatsPokemon (respuestaJSON){
-    $("#ataque").text(`Velocidad: ${respuestaJSON.stats[4].base_stat}`)
+    $("#ataque").text(`Ataque: ${respuestaJSON.stats[4].base_stat}`)
     $("#defensa").text(`Defensa: ${respuestaJSON.stats[3].base_stat}`)
     $("#ataque-s").text(`Ataque S: ${respuestaJSON.stats[2].base_stat}`)
     $("#defensa-s").text(`Defensa S: ${respuestaJSON.stats[1].base_stat}`)
