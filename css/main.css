@@ -1,0 +1,24 @@
+body{
+    background-image: url("../img/pokedex-background.png");
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+.pokemon-titulo{
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lista-pokemones{
+    text-align: center;
+}
+
+.botones-centrados{
+    align-items: center;
+}
+
+.imagen-pokemon{
+    width: 300%;
+    height: auto;
+}
