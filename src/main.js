@@ -17,7 +17,7 @@ async function mostrarListaPokemon(URL) {
 
             })
             $("li").click(() => {
-                let click = clickEnPokemon();
+                let click = clickPokemonLista();
                 mostrarPokemonSeleccionado(click);
             });
             siguienteURL = respuestaJSON.next
@@ -32,7 +32,7 @@ function obtenerNumeroPokemon(elemento) {
     return numeroPokemon.replace(/[^0-9]/g, '');
 }
 
-function clickEnPokemon() {
+function clickPokemonLista() {
     const click = event.target
     return click.dataset.pokemon
 }
@@ -163,12 +163,23 @@ async function traducirEspaniol(elemento) {
         .then(respuesta => respuesta.json())
         .then(respuestaJSON => {
             console.log(respuestaJSON)
-            debugger
             const temporal = respuestaJSON.names.find((x) =>
                 x.language.name === "es");
             return temporal.names
         })
 }
+
+$("#boton-ingresar-pokemon").click(() => {
+    const pokemon = $("#ingresar-pokemon").val()
+    buscarPokemon(pokemon)
+})
+
+function buscarPokemon(pokemon) {
+    mostrarPokemonSeleccionado(pokemon)
+}
+
+
+
 // function obtenerTipo
 
 // function obtenerEvoluciones
