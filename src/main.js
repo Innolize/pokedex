@@ -1,7 +1,8 @@
 ///<reference types="jquery"/>
 
 let URL = "https://pokeapi.co/api/v2/pokemon"
-
+let siguienteURL
+let anteriorURL
 
 mostrarListaPokemon(URL)
 mostrarPokemonSeleccionado("bulbasaur")
@@ -10,11 +11,10 @@ async function mostrarListaPokemon(URL) {
     const rJSON = await r.json()
     Object.keys(rJSON.results).forEach(pokemones => {
         numeroPokemonLista = obtenerNumeroPokemon(rJSON.results[pokemones].url)
-        $("#pokemones").append($(`<li class="lista-pokemones" data-pokemon="${rJSON.results[pokemones].name}">#${numeroPokemonLista} ${rJSON.results[pokemones].name}</li>`))
-
+        $("#data").append($(`<tr><td class="border px-4 py-2" data-pokemon="${rJSON.results[pokemones].name}">${rJSON.results[pokemones].name}</td><td class="border px-4 py-2">${numeroPokemonLista}</td>`))
 
     })
-    $("li").click(() => {
+    $("tr").click(() => {
         let click = clickPokemonLista();
         mostrarPokemonSeleccionado(click);
     });
@@ -36,16 +36,11 @@ function clickPokemonLista() {
 }
 
 
-
-
-let siguienteURL
-let anteriorURL
-
 $("#siguiente").click(() => {
     if (siguienteURL === null) {
         return;
     } else {
-        $("#pokemones").html("")
+        $("#data").html("")
         mostrarListaPokemon(siguienteURL)
     }
 })
@@ -54,7 +49,7 @@ $("#anterior").click(() => {
     if (anteriorURL === null) {
         return;
     } else {
-        $("#pokemones").html("")
+        $("#data").html("")
         mostrarListaPokemon(anteriorURL)
     }
 })
@@ -69,8 +64,9 @@ async function mostrarPokemonSeleccionado(pokemon) {
     mostrarImagenPokemon(rJSON)
     mostrarStatsPokemon(rJSON)
     obtenerDescripcion(rJSON.id)
-    boludo(rJSON)
-    async function boludo(rJSON) {
+    mostrarTipo(rJSON)
+    manejarHabilidades(rJSON)
+    async function manejarHabilidades(rJSON) {
         const habilidades = await obtenerHabilidad(rJSON.name)
         const habilidadesEspaniol = await traducirEspaniol(habilidades)
         console.log(habilidadesEspaniol)
@@ -80,10 +76,19 @@ async function mostrarPokemonSeleccionado(pokemon) {
 
 
 }
+function mostrarTipo(rJSON) {
+    debugger
+    console.log(rJSON)
+    $("#tipos").html("")
+    rJSON.types.forEach(types => {
+        $("#tipos").append(`<img src="img/Tipos/${types.type.name}.gif"/>`)
+    })
+}
+
+
 
 
 function mostrarHabilidad(array) {
-    debugger
     console.log(array)
     $("#habilidad").html("")
 
@@ -141,9 +146,9 @@ function mostrarStatsPokemon(rJSON) {
 async function obtenerDescripcion(id) {
     const r = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
     const rJSON = await r.json()
-            const descripcion = rJSON.flavor_text_entries.find((x) =>
-                x.language.name === "es");
-            $("#descripcion").text(`${descripcion.flavor_text}`)
+    const descripcion = rJSON.flavor_text_entries.find((x) =>
+        x.language.name === "es");
+    $("#descripcion").text(`${descripcion.flavor_text}`)
 }
 
 async function obtenerHabilidad(name) {
