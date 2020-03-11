@@ -6,24 +6,22 @@ let URL = "https://pokeapi.co/api/v2/pokemon"
 mostrarListaPokemon(URL)
 mostrarPokemonSeleccionado("bulbasaur")
 async function mostrarListaPokemon(URL) {
-    await fetch(URL)
-        .then(respuesta => respuesta.json())
-        .then(respuestaJSON => {
-            console.log(respuestaJSON)
-            Object.keys(respuestaJSON.results).forEach(pokemones => {
-                numeroPokemonLista = obtenerNumeroPokemon(respuestaJSON.results[pokemones].url)
-                $("#pokemones").append($(`<li class="lista-pokemones" data-pokemon="${respuestaJSON.results[pokemones].name}">#${numeroPokemonLista} ${respuestaJSON.results[pokemones].name}</li>`))
+    const r = await fetch(URL)
+    const rJSON = await r.json()
+    Object.keys(rJSON.results).forEach(pokemones => {
+        numeroPokemonLista = obtenerNumeroPokemon(rJSON.results[pokemones].url)
+        $("#pokemones").append($(`<li class="lista-pokemones" data-pokemon="${rJSON.results[pokemones].name}">#${numeroPokemonLista} ${rJSON.results[pokemones].name}</li>`))
 
 
-            })
-            $("li").click(() => {
-                let click = clickPokemonLista();
-                mostrarPokemonSeleccionado(click);
-            });
-            siguienteURL = respuestaJSON.next
-            anteriorURL = respuestaJSON.previous
+    })
+    $("li").click(() => {
+        let click = clickPokemonLista();
+        mostrarPokemonSeleccionado(click);
+    });
+    siguienteURL = rJSON.next
+    anteriorURL = rJSON.previous
 
-        })
+
 }
 
 
@@ -62,39 +60,48 @@ $("#anterior").click(() => {
 })
 
 async function mostrarPokemonSeleccionado(pokemon) {
-    await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
-        .then(respuesta => respuesta.json())
-        .then(respuestaJSON => {
+    const URL = (`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
+    const r = await fetch(URL)
+    const rJSON = await r.json()
+
+    mostrarMiniDescripcion(rJSON.id)
+    mostrarNumeroYNombrePokemon(rJSON)
+    mostrarImagenPokemon(rJSON)
+    mostrarStatsPokemon(rJSON)
+    obtenerDescripcion(rJSON.id)
+    boludo(rJSON)
+    async function boludo(rJSON) {
+        const habilidades = await obtenerHabilidad(rJSON.name)
+        const habilidadesEspaniol = await traducirEspaniol(habilidades)
+        console.log(habilidadesEspaniol)
+        mostrarHabilidad(habilidadesEspaniol)
+
+    }
 
 
-            mostrarMiniDescripcion(respuestaJSON.id)
-            mostrarNumeroYNombrePokemon(respuestaJSON)
-            mostrarImagenPokemon(respuestaJSON)
-            mostrarStatsPokemon(respuestaJSON)
-            obtenerDescripcion(respuestaJSON.id)
-            manejarHabilidad()
-            async function manejarHabilidad() {
-                const habilidad = await obtenerHabilidad(respuestaJSON.name)
-                mostrarHabilidad(habilidad)
-            }
-        })
 }
 
-async function mostrarHabilidad(elemento) {
-    console.log(elemento)
+
+function mostrarHabilidad(array) {
+    debugger
+    console.log(array)
     $("#habilidad").html("")
 
-    $("#habilidad").append(`<div>${elemento}`)
+    array.forEach(elemento => {
+        console.log(elemento)
+        $("#habilidad").append(`<div>${elemento}`)
+    })
 }
 
+
+
+
 async function mostrarMiniDescripcion(id) {
-    await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
-        .then(respuesta => respuesta.json())
-        .then(respuestaJSON => {
-            let miniDescripcion = respuestaJSON.genera.find((x) =>
-                x.language.name === "es");
-            $("#mini-descripcion").text(miniDescripcion.genus)
-        })
+    const r = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
+    const rJSON = await r.json()
+    let miniDescripcion = rJSON.genera.find((x) =>
+        x.language.name === "es");
+    $("#mini-descripcion").text(miniDescripcion.genus)
 }
 
 
@@ -111,62 +118,61 @@ function agregarCeros(numero, longitud) {
     return string
 }
 
-function mostrarNumeroYNombrePokemon(respuestaJSON) {
-    $("#id-pokemon").text(`Nº ${respuestaJSON.id} ${respuestaJSON.name}`)
+function mostrarNumeroYNombrePokemon(rJSON) {
+    $("#id-pokemon").text(`Nº ${rJSON.id} ${rJSON.name}`)
 }
 
-function mostrarImagenPokemon(respuestaJSON) {
-    $("#imagen-pokemon").attr("src", `${obtenerImagenPokemon(respuestaJSON.id)}`)
+function mostrarImagenPokemon(rJSON) {
+    $("#imagen-pokemon").attr("src", `${obtenerImagenPokemon(rJSON.id)}`)
 }
 
-function mostrarStatsPokemon(respuestaJSON) {
-    $("#ataque").text(`Ataque: ${respuestaJSON.stats[4].base_stat}`)
-    $("#defensa").text(`Defensa: ${respuestaJSON.stats[3].base_stat}`)
-    $("#ataque-s").text(`Ataque S: ${respuestaJSON.stats[2].base_stat}`)
-    $("#defensa-s").text(`Defensa S: ${respuestaJSON.stats[1].base_stat}`)
-    $("#velocidad").text(`Velocidad: ${respuestaJSON.stats[0].base_stat}`)
-    $("#vitalidad").text(`Vitalidad: ${respuestaJSON.stats[5].base_stat}`)
+function mostrarStatsPokemon(rJSON) {
+    $("#ataque").text(`Ataque: ${rJSON.stats[4].base_stat}`)
+    $("#defensa").text(`Defensa: ${rJSON.stats[3].base_stat}`)
+    $("#ataque-s").text(`Ataque S: ${rJSON.stats[2].base_stat}`)
+    $("#defensa-s").text(`Defensa S: ${rJSON.stats[1].base_stat}`)
+    $("#velocidad").text(`Velocidad: ${rJSON.stats[0].base_stat}`)
+    $("#vitalidad").text(`Vitalidad: ${rJSON.stats[5].base_stat}`)
 }
+
+
+
 
 async function obtenerDescripcion(id) {
-    await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
-        .then(respuesta => respuesta.json())
-        .then(respuestaJSON => {
-            const descripcion = respuestaJSON.flavor_text_entries.find((x) =>
+    const r = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`)
+    const rJSON = await r.json()
+            const descripcion = rJSON.flavor_text_entries.find((x) =>
                 x.language.name === "es");
             $("#descripcion").text(`${descripcion.flavor_text}`)
-        })
-
 }
 
 async function obtenerHabilidad(name) {
-    await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`)
-        .then(respuesta => respuesta.json())
-        .then(respuestaJSON => {
-            console.log(respuestaJSON.abilities)
-            let array = []
-            respuestaJSON.abilities.forEach(elemento => {
-                console.log(elemento.ability.url)
-                array.push(elemento.ability.url)
-            })
-            let arrayTraducido = []
-            array.forEach(elemento => {
-                arrayTraducido.push(traducirEspaniol(elemento))
-            })
-            return arrayTraducido
-        })
+    let array = []
+    const URL = `https://pokeapi.co/api/v2/pokemon/${name}/`
+    const r = await fetch(URL)
+    const rJSON = await r.json()
+
+    rJSON.abilities.forEach(elemento => {
+        array.push(elemento.ability.url)
+    })
+    console.log(array)
+
+
+    return array
 }
 
-
 async function traducirEspaniol(elemento) {
-    await fetch(elemento)
-        .then(respuesta => respuesta.json())
-        .then(respuestaJSON => {
-            console.log(respuestaJSON)
-            const temporal = respuestaJSON.names.find((x) =>
-                x.language.name === "es");
-            return temporal.names
-        })
+    let traduccionArray = []
+
+    for (let URL of elemento) {
+        const r = await fetch(URL)
+        const rJSON = await r.json()
+        const temporal = rJSON.names.find((x) =>
+            x.language.name === "es");
+        traduccionArray.push(temporal.name)
+    }
+    return traduccionArray
+
 }
 
 $("#boton-ingresar-pokemon").click(() => {
