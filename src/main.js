@@ -11,7 +11,8 @@ async function mostrarListaPokemon(URL) {
     const rJSON = await r.json()
     Object.keys(rJSON.results).forEach(pokemones => {
         numeroPokemonLista = obtenerNumeroPokemon(rJSON.results[pokemones].url)
-        $("#data").append($(`<tr><td class="border px-4 py-2" data-pokemon="${rJSON.results[pokemones].name}">${rJSON.results[pokemones].name}</td><td class="border px-4 py-2">${numeroPokemonLista}</td>`))
+        pokemon = rJSON.results[pokemones].name
+        $("#data").append($(`<tr class="cursor-pointer"><td class="border px-4 py-2" data-pokemon="${pokemon}">${primerLetraMayus(pokemon)}</td><td class="border px-4 py-2">${numeroPokemonLista}</td>`))
 
     })
     $("tr").click(() => {
@@ -22,6 +23,10 @@ async function mostrarListaPokemon(URL) {
     anteriorURL = rJSON.previous
 
 
+}
+
+function primerLetraMayus(palabra) {
+    return palabra.charAt(0).toUpperCase() + palabra.slice(1);
 }
 
 
@@ -124,7 +129,7 @@ function agregarCeros(numero, longitud) {
 }
 
 function mostrarNumeroYNombrePokemon(rJSON) {
-    $("#id-pokemon").text(`Nº ${rJSON.id} ${rJSON.name}`)
+    $("#id-pokemon").text(`Nº ${rJSON.id} ${primerLetraMayus(rJSON.name)}`)
 }
 
 function mostrarImagenPokemon(rJSON) {
