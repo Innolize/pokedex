@@ -12,7 +12,7 @@ async function mostrarListaPokemon(URL) {
     Object.keys(rJSON.results).forEach(pokemones => {
         numeroPokemonLista = obtenerNumeroPokemon(rJSON.results[pokemones].url)
         pokemon = rJSON.results[pokemones].name
-        $("#data").append($(`<tr class="cursor-pointer"><td class="border px-4 py-2" data-pokemon="${pokemon}">${primerLetraMayus(pokemon)}</td><td class="border px-4 py-2">${numeroPokemonLista}</td>`))
+        $("#data").append($(`<tr><td class="border px-4 py-2 cursor-pointer" data-pokemon="${pokemon}">${primerLetraMayus(pokemon)}</td><td class="border px-4 py-2">${numeroPokemonLista}</td>`))
 
     })
     $("tr").click(() => {
@@ -193,13 +193,3 @@ $("#boton-ingresar-pokemon").click(() => {
 function buscarPokemon(pokemon) {
     mostrarPokemonSeleccionado(pokemon)
 }
-
-
-
-// function obtenerTipo
-
-// function obtenerEvoluciones
-
-
-
-//abilities.names.find((ability) => ability.language.name === idioma);
