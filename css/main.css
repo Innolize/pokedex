@@ -1,7 +1,7 @@
 body{
     background-image: url("../img/pokedex-background.png");
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
 }
 .pokemon-titulo{
     height: 200px;
@@ -19,6 +19,12 @@ body{
 }
 
 .imagen-pokemon{
-    width: 300%;
+    width: auto;
     height: auto;
+}
+
+.centrado {
+
+    margin-left:auto;
+    margin-right:auto;
 }
