@@ -18,8 +18,8 @@ export async function mostrarPokemonSeleccionado(pokemon) {
     mostrarTipo(rJSON)
     manejarHabilidades(rJSON)
 }
+
 async function manejarHabilidades(rJSON) {
-    debugger
     const habilidades = await obtenerHabilidad(rJSON)
     const habilidadesEspaniol = await traducirEspaniol(habilidades)
     mostrarHabilidad(habilidadesEspaniol)
@@ -91,7 +91,6 @@ function mostrarHabilidad(array) {
 }
 
 export function listaClickeable() {
-    debugger
     $("tr").click(() => {
         let click = clickPokemonLista();
         mostrarPokemonSeleccionado(click);
