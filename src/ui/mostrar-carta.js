@@ -5,11 +5,15 @@ import {
 } from "../utilidades.js"
 
 
-export async function mostrarPokemonSeleccionado(pokemon) {
+export async function obtenerDatosPokemonSeleccionado(pokemon) {
     const URL = (`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
     const r = await fetch(URL)
     const rJSON = await r.json()
 
+    return rJSON
+}
+
+export async function mostrarPokemonSeleccionado(rJSON) {
     mostrarMiniDescripcion(rJSON)
     mostrarNumeroYNombrePokemon(rJSON)
     mostrarImagenPokemon(rJSON)
@@ -93,9 +97,10 @@ function mostrarHabilidad(array) {
 export function listaClickeable() {
     $("tr").click(() => {
         let click = clickPokemonLista();
-        mostrarPokemonSeleccionado(click);
+        return click;
     });
 }
+
 function clickPokemonLista() {
     const click = event.target
     return click.dataset.pokemon
