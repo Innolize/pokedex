@@ -28,10 +28,11 @@ async function actualizarLista(URL) {
 async function iniciar(URL) {
     debugger
     const lista = await obtenerDatosListaPokemon(URL)
+    const pokemon = await obtenerDatosPokemonSeleccionado();
     mostrarListaPokemon(lista);
     listaClickeable();
     configurarBotones(lista);
-    const pokemon = await obtenerDatosPokemonSeleccionado("bulbasaur");
+    
     mostrarPokemonSeleccionado(pokemon)
 
 }

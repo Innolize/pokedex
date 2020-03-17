@@ -5,7 +5,7 @@ import {
 } from "../utilidades.js"
 
 
-export async function obtenerDatosPokemonSeleccionado(pokemon) {
+export async function obtenerDatosPokemonSeleccionado(pokemon = "bulbasaur") {
     const URL = (`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
     const r = await fetch(URL)
     const rJSON = await r.json()
@@ -13,14 +13,14 @@ export async function obtenerDatosPokemonSeleccionado(pokemon) {
     return rJSON
 }
 
-export async function mostrarPokemonSeleccionado(rJSON) {
+export function mostrarPokemonSeleccionado(rJSON) {
+    manejarHabilidades(rJSON)
     mostrarMiniDescripcion(rJSON)
     mostrarNumeroYNombrePokemon(rJSON)
     mostrarImagenPokemon(rJSON)
     mostrarStatsPokemon(rJSON)
     mostrarDescripcion(rJSON)
     mostrarTipo(rJSON)
-    manejarHabilidades(rJSON)
 }
 
 async function manejarHabilidades(rJSON) {
