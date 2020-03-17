@@ -5,6 +5,7 @@
   "main": "index.html",
   "dependencies": {
     "jquery": "^3.4.1",
+    "remove-node-modules": "^1.7.6",
     "tailwindcss": "^1.2.0"
   },
   "devDependencies": {},
