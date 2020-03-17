@@ -115,11 +115,6 @@ async function obtenerHabilidad(elemento) {
 }
 
 /////////////////////////////////////////////////
-
-function buscarPokemon(pokemon) {
-    mostrarPokemonSeleccionado(pokemon)
-}
-
 /////////////////////////////////////////////////
 
 $("#siguiente").click(() => {

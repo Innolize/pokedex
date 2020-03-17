@@ -12,8 +12,8 @@ let URL = "https://pokeapi.co/api/v2/pokemon"
 
 
 async function iniciar() {
-    const baka = await mostrarListaPokemon(URL);
-    const baka2 = await configurarBotones();
+    const promesa = await mostrarListaPokemon(URL);
+    const promesa2 = await configurarBotones();
     await mostrarPokemonSeleccionado("bulbasaur");
     listaClickeable();
 }
