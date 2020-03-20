@@ -4,12 +4,7 @@ import {
     traducirEspaniol
 } from "../utilidades.js"
 
-
-export async function mostrarPokemonSeleccionado(pokemon) {
-    const URL = (`https://pokeapi.co/api/v2/pokemon/${pokemon}/`)
-    const r = await fetch(URL)
-    const rJSON = await r.json()
-
+export async function mostrarPokemonSeleccionado(rJSON) {
     mostrarMiniDescripcion(rJSON)
     mostrarNumeroYNombrePokemon(rJSON)
     mostrarImagenPokemon(rJSON)
@@ -19,7 +14,6 @@ export async function mostrarPokemonSeleccionado(pokemon) {
     manejarHabilidades(rJSON)
 }
 async function manejarHabilidades(rJSON) {
-    debugger
     const habilidades = await obtenerHabilidad(rJSON)
     const habilidadesEspaniol = await traducirEspaniol(habilidades)
     mostrarHabilidad(habilidadesEspaniol)
@@ -90,14 +84,3 @@ function mostrarHabilidad(array) {
     })
 }
 
-export function listaClickeable() {
-    debugger
-    $("tr").click(() => {
-        let click = clickPokemonLista();
-        mostrarPokemonSeleccionado(click);
-    });
-}
-function clickPokemonLista() {
-    const click = event.target
-    return click.dataset.pokemon
-}
