@@ -11,7 +11,6 @@ import {
     obtenerDatosPokemonAPI,
 } from "./service/pokemonAPI.js"
 
-
 import {
     configurarBotonesLista,
     botonesClickeables,
@@ -22,6 +21,7 @@ async function actualizarLista(url) {
     const datosLista = await obtenerDatosListaPokemonAPI(url)
     mostrarListaPokemon(await datosLista)
     configurarBotonesLista(await datosLista)
+    listaClickeable(actualizarPokemon)
 
 }
 

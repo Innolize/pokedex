@@ -80,7 +80,7 @@ function mostrarHabilidad(array) {
     $("#habilidad").html("")
 
     array.forEach(elemento => {
-        $("#habilidad").append(`<div>${elemento}`)
+        $("#habilidad").append(`<p> ${elemento} </p>`)
     })
 }
 

@@ -28,3 +28,7 @@ body{
     margin-left:auto;
     margin-right:auto;
 }
+
+.vl{
+    border-left:3px solid black;
+}
