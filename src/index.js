@@ -22,7 +22,6 @@ async function actualizarLista(url) {
     mostrarListaPokemon(await datosLista)
     configurarBotonesLista(await datosLista)
     listaClickeable(actualizarPokemon)
-
 }
 
 async function actualizarPokemon(pokemon) {
@@ -36,7 +35,7 @@ async function iniciarPokedex() {
     mostrarPokemonSeleccionado(await obtenerDatosPokemonAPI())
     configurarBotonesLista(datosLista)
     botonesClickeables(actualizarLista)
-    
+
 }
 
 iniciarPokedex();

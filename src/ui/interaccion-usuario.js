@@ -28,7 +28,7 @@ export function botonesClickeables(funcion) {
 
 export function listaClickeable(funcion) {
     debugger
-    $("tr").click(() => {
+    $("td").click(() => {
         let click = clickPokemonLista();
         funcion(click);
     });

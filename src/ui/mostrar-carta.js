@@ -4,6 +4,12 @@ import {
     traducirEspaniol
 } from "../utilidades.js"
 
+
+
+
+
+
+
 export async function mostrarPokemonSeleccionado(rJSON) {
     mostrarMiniDescripcion(rJSON)
     mostrarNumeroYNombrePokemon(rJSON)
