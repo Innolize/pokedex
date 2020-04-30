@@ -4,7 +4,7 @@
   "description": "pokedex para r/argentina programa",
   "main": "index.html",
   "dependencies": {
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "tailwindcss": "^1.2.0"
   },
   "devDependencies": {},
